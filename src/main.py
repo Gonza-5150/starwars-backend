@@ -30,6 +30,8 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+#****************USERS********************
+#-----------------------------------------
 @app.route('/user', methods=['GET'])
 def get_user():
     user = User.query.filter().all()
@@ -40,6 +42,9 @@ def get_user():
     }
 
     return jsonify(response_body), 200
+
+#****************PLANETS********************
+#-------------------------------------------
 
 @app.route('/planets', methods=['GET'])
 def get_planets():
@@ -52,6 +57,21 @@ def get_planet(planet_id):
     planet = Planets.query.get(planet_id)
     return jsonify(planet.serialize()), 200
 
+@app.route('/planets', methods=['POST'])
+def add_planet():
+    body = request.get_json()
+    planet = Planets(name=body['name'])
+    db.session.add(planet)
+    db.session.commit()
+    response_body = {
+        "msg": "Planet added successfully"
+    }
+
+    return jsonify(planet.serialize()), 200
+
+#****************VEHICLES********************
+#--------------------------------------------
+
 @app.route('/vehicles', methods=['GET'])
 def get_vehicles():
     vehicles = Vehicles.query.filter().all()
@@ -63,6 +83,9 @@ def get_vehicle(vehicle_id):
     vehicle = Vehicles.query.get(vehicle_id)
     return jsonify(vehicle.serialize()), 200
 
+#****************PEOPLE********************
+#------------------------------------------
+
 @app.route('/people', methods=['GET'])
 def get_people():
     people = People.query.filter().all()
@@ -73,6 +96,8 @@ def get_people():
 def get_character(people_id):
     character = People.query.get(people_id)
     return jsonify(character.serialize()), 200
+
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
