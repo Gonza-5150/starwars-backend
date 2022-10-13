@@ -48,6 +48,18 @@ def get_user(user_id):
     user = User.query.get(user_id)
     return jsonify(user.serialize()), 200
 
+#****************FAVORITES********************
+#---------------------------------------------
+
+@app.route('/favorites', methods=['GET'])
+def get_favorites():
+    planets = Favorites_planet.query.filter().all()
+    people = Favorites_people.query.filter().all()
+    vehicles = Favorites_vehicles.query.filter().all()
+    result = list(map(lambda planet: planet.serialize(), planets)),
+    list(map(lambda character: character.serialize(), people)),
+    list(map(lambda vehicle: vehicle.serialize(), vehicles))
+    return jsonify(result), 200
 
 
 
