@@ -57,6 +57,11 @@ class People(db.Model):
             "eyes_color": self.eyes_color,
         }
 
+    def create_people(name, gender, hair_color, eye_color):
+            people = People(name=name, gender=gender, skin_color=skin_color, birth=birth, eye_color=eye_color)
+            db.session.add(People)
+            db.session.commit()
+
 class Vehicles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
@@ -81,14 +86,52 @@ class Favorites_people(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "gender": self.gender,
+            "skin_color": self.skin_color,
+            "birth": self.birth,
+            "eyes_color": self.eyes_color,
+            "user_id": self.user_id
+        }
+
+        def create_fav_people(people_id, user_id):
+            people = People(people_id, user_id=user_id)
+            db.session.add(Favorites_people)
+            db.session.commit()
+
 class Favorites_planet(db.Model):
     __tablename__ = 'planet_favorites'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "diameter": self.diameter,
+            "climate": self.climate,
+            "population": self.population,
+            "gravity": self.gravity,
+            "user_id": self.user_id
+        }
+
 class Favorites_vehicles(db.Model):
     __tablename__ = 'vehicles_favorites'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     vehicles_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "crafter": self.crafter,
+            "tripulation": self.tripulation,
+            "speed": self.speed,
+            "passengers": self.passengers,
+            "user_id": self.user_id
+        }
