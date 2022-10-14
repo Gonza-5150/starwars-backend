@@ -62,7 +62,7 @@ def get_people():
 def get_character(people_id):
     character = People.query.get(people_id)
     return jsonify(character.serialize()), 200
-
+    
 
 
 #****************PLANETS********************
@@ -125,6 +125,7 @@ def add_fav_people(user_id, people_id):
         "msg": "Favorito agregado"
     }
     return jsonify(response_body), 200
+    
 
 
 #****************FAV PLANETS********************
@@ -134,7 +135,7 @@ def add_fav_people(user_id, people_id):
 def get_fav_planet():
     planets = Favorites_planet.query.filter().all()
     result = list(map(lambda planet: planet.serialize(), planets))
-    return {"msj":"Planets response"} # jsonify(result), 200
+    return jsonify(result), 200
 
 @app.route('/user/favorites/planets/<int:user_id>/<int:planet_id>', methods=['POST'])
 def add_fav_planet(user_id, planet_id):
@@ -153,7 +154,7 @@ def add_fav_planet(user_id, planet_id):
 def get_fav_vehicles():
     vehicles = Favorites_vehicles.query.filter().all()
     result = list(map(lambda vehicle: vehicle.serialize(), vehicles))
-    return {"msj":"Vehicles response"} #jsonify(result), 200, 
+    return jsonify(result), 200, 
 
 @app.route('/user/favorites/vehicles/<int:user_id>/<int:vehicles_id>', methods=['POST'])
 def add_fav_vehicle(user_id, vehicles_id):
