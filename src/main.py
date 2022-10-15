@@ -148,8 +148,7 @@ def add_fav_people(user_id, people_id):
 def delete_people(user_id, people_id):
     delete = Favorites_people.query.filter_by(people_id=people_id, user_id=user_id).first()
     db.session.delete(delete)
-    db.session.commit()
-            
+    db.session.commit()        
     return jsonify({"msj": "deleted character"}), 200
 
 
@@ -176,8 +175,7 @@ def add_fav_planet(user_id, planet_id):
 def delete_planet(user_id, planet_id):
     delete = Favorites_planet.query.filter_by(planet_id=planet_id, user_id=user_id).first()
     db.session.delete(delete)
-    db.session.commit()
-            
+    db.session.commit()      
     return jsonify({"msg":"Deleted planet"}), 200
 
 # ****************FAV VEHICLES********************
@@ -206,8 +204,7 @@ def add_fav_vehicle(user_id, vehicles_id):
 def delete_vehicle(user_id, vehicles_id):
     delete = Favorites_vehicles.query.filter_by(vehicles_id=vehicles_id, user_id=user_id).first()
     db.session.delete(delete)
-    db.session.commit()
-            
+    db.session.commit()       
     return jsonify({"msj": "deleted vehicle"}), 200
 
 
