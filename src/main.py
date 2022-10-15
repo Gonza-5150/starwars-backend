@@ -116,7 +116,7 @@ def get_fav_people():
      result = list(map(lambda character: character.serialize(), people))
      return jsonify(result), 200
 
-@app.route('/user/favorites/people/<int:user_id>/<int:people_id>', methods=['POST'])
+@app.route('/user/<int:user_id>/favorites/people/<int:people_id>', methods=['POST'])
 def add_fav_people(user_id, people_id):
     fav_people = Favorites_people(user_id=int(user_id), people_id=int(people_id))
     db.session.add(fav_people)
@@ -137,7 +137,7 @@ def get_fav_planet():
     result = list(map(lambda planet: planet.serialize(), planets))
     return jsonify(result), 200
 
-@app.route('/user/favorites/planets/<int:user_id>/<int:planet_id>', methods=['POST'])
+@app.route('/user/<int:user_id>/favorites/planets/<int:planet_id>', methods=['POST'])
 def add_fav_planet(user_id, planet_id):
     fav_planet = Favorites_planet(user_id=int(user_id), planet_id=int(planet_id))
     db.session.add(fav_planet)
@@ -156,7 +156,7 @@ def get_fav_vehicles():
     result = list(map(lambda vehicle: vehicle.serialize(), vehicles))
     return jsonify(result), 200, 
 
-@app.route('/user/favorites/vehicles/<int:user_id>/<int:vehicles_id>', methods=['POST'])
+@app.route('/user/<int:user_id>/favorites/vehicles/<int:vehicles_id>', methods=['POST'])
 def add_fav_vehicle(user_id, vehicles_id):
     fav_vehicle = Favorites_vehicles(user_id=int(user_id), vehicles_id=int(vehicles_id))
     db.session.add(fav_vehicle)
