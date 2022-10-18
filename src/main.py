@@ -114,11 +114,11 @@ def get_vehicle(vehicle_id):
 # ---------------------------------------------
 
 
-@app.route("/user/favorites", methods=["GET"])
-def get_favorites():
-    planets = Favorites_planet.query.filter().all()
-    people = Favorites_people.query.filter().all()
-    vehicles = Favorites_vehicles.query.filter().all()
+@app.route("/user/<int:user_id>/favorites", methods=["GET"])
+def get_favorites(user_id):
+    planets = Favorites_planet.query.filter_by(user_id=user_id).all()
+    people = Favorites_people.query.filter_by(user_id=user_id).all()
+    vehicles = Favorites_vehicles.query.filter_by(user_id=user_id).all()
     result = (list(map(lambda planet: planet.serialize(), planets)),
     list(map(lambda character: character.serialize(), people)),
     list(map(lambda vehicle: vehicle.serialize(), vehicles)))
