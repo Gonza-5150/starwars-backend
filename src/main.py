@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 from flask import Flask, request, jsonify, url_for
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -22,6 +23,8 @@ from models import (
 # from models import Person
 
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
 app.url_map.strict_slashes = False
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_CONNECTION_STRING")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -206,6 +209,21 @@ def delete_vehicle(user_id, vehicles_id):
     db.session.delete(delete)
     db.session.commit()       
     return jsonify({"msj": "deleted vehicle"}), 200
+
+
+# *******************TOKEN************************
+# ------------------------------------------------
+
+@app.route('/token', methods=['POST'])
+def create_token():
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    if email != "test" or password != "test":
+        print(email,password)
+        return jsonify({"msg":"Wrong email or password"}), 401
+
+    acces_token = create_access_token(identity=email)
+    return jsonify(acces_token=acces_token)
 
 
 # this only runs if `$ python src/main.py` is executed
