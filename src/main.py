@@ -218,7 +218,8 @@ def delete_vehicle(user_id, vehicles_id):
 def create_token():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if email != "test" or password != "test":
+    user = User.query.filter_by(email=email, password=password).first()
+    if not  user:
         print(email,password)
         return jsonify({"msg":"Wrong email or password"}), 401
 
